@@ -22,7 +22,6 @@ A Google API key is needed:
 
 ####TODO
 
-* Allow linking to a particulart point in time (12:34)
 * Search in subtitles and point to the right point in time
 
 [1]: https://api.slack.com/slash-commands
