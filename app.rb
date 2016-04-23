@@ -40,7 +40,7 @@ get '/' do
   # Return the video best matching the query string
   json({
     response_type: "in_channel",
-    text: "For #{]} #{search_response.data.items[0].snippet.title} " +
+    text: "#{search_response.data.items[0].snippet.title} " +
           "https://www.youtube.com/watch?v=#{search_response.data.items[0].id.videoId}"
   })
 end
