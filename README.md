@@ -20,6 +20,9 @@ A Google API key is needed:
 
     $ heroku config:set GOOGLE_API_KEY=REPLACE_ME
 
+####TODO
+
+* Pick more than one result and randomize
 
 [1]: https://api.slack.com/slash-commands
 [2]: https://developers.google.com/youtube/v3/docs/search/list#examples

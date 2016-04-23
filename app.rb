@@ -23,6 +23,7 @@ end
 
 get '/' do
   # Find the query string from the Slack command
+  q = params['text']
 
   # Find the right video in Youtube
   client, youtube = get_service
@@ -30,7 +31,7 @@ get '/' do
     :api_method => youtube.search.list,
     :parameters => {
       :part => 'snippet',
-      :q => 'Faemino Manuel Campo Vidal',
+      :q => "Faemino y Cansado #{q}",
       :type => 'video',
       :maxResults => 1
     }
@@ -39,7 +40,7 @@ get '/' do
   # Return the video best matching the query string
   json({
     response_type: "in_channel",
-    text: "For #{params['text']} #{search_response.data.items[0].snippet.title} " +
+    text: "For #{]} #{search_response.data.items[0].snippet.title} " +
           "https://www.youtube.com/watch?v=#{search_response.data.items[0].id.videoId}"
   })
 end
