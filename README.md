@@ -22,7 +22,8 @@ A Google API key is needed:
 
 ####TODO
 
-* Pick more than one result and randomize
+* Allow linking to a particulart point in time (12:34)
+* Search in subtitles and point to the right point in time
 
 [1]: https://api.slack.com/slash-commands
 [2]: https://developers.google.com/youtube/v3/docs/search/list#examples

@@ -33,14 +33,18 @@ get '/' do
       :part => 'snippet',
       :q => "Faemino y Cansado #{q}",
       :type => 'video',
-      :maxResults => 1
+      :safeSearch => 'none',
+      :maxResults => 10
     }
   )
+
+  # Pick a result at random
+  selected_position = rand(search_response.data.items.size)
+  selected_item = search_response.data.items[selected_position]
 
   # Return the video best matching the query string
   json({
     response_type: "in_channel",
-    text: "#{search_response.data.items[0].snippet.title} " +
-          "https://www.youtube.com/watch?v=#{search_response.data.items[0].id.videoId}"
+    text: "#{selected_item.snippet.title} https://www.youtube.com/watch?v=#{selected_item.id.videoId}"
   })
 end
