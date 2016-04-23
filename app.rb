@@ -22,8 +22,10 @@ end
 
 
 get '/' do
-  client, youtube = get_service
+  # Find the query string from the Slack command
 
+  # Find the right video in Youtube
+  client, youtube = get_service
   search_response = client.execute!(
     :api_method => youtube.search.list,
     :parameters => {
@@ -34,9 +36,10 @@ get '/' do
     }
   )
 
+  # Return the video best matching the query string
   json({
     response_type: "in_channel",
-    text: "#{search_response.data.items[0].snippet.title} " +
+    text: "For #{params['text']} #{search_response.data.items[0].snippet.title} " +
           "https://www.youtube.com/watch?v=#{search_response.data.items[0].id.videoId}"
   })
 end
