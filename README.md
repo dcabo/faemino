@@ -1,0 +1,1 @@
+We're going to build a Slash command, `/faemino`.
