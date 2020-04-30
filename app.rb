@@ -1,6 +1,6 @@
 require 'sinatra'
 require 'sinatra/json'
-require 'google/api_client'
+require 'google/apis/youtube_v3'
 
 require './env' if File.exists?('env.rb')
 
@@ -9,15 +9,9 @@ YOUTUBE_API_VERSION = 'v3'
 
 # See https://developers.google.com/youtube/v3/docs/search/list#examples
 def get_service
-  client = Google::APIClient.new(
-    :key => ENV['GOOGLE_API_KEY'],
-    :authorization => nil,
-    :application_name => $PROGRAM_NAME,
-    :application_version => '1.0.0'
-  )
-  youtube = client.discovered_api(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION)
-
-  return client, youtube
+  client = Google::Apis::YoutubeV3::YouTubeService.new
+  client.key = ENV['GOOGLE_API_KEY']
+  return client
 end
 
 
@@ -26,25 +20,22 @@ get '/' do
   q = params['text']
 
   # Find the right video in Youtube
-  client, youtube = get_service
-  search_response = client.execute!(
-    :api_method => youtube.search.list,
-    :parameters => {
-      :part => 'snippet',
-      :q => "Faemino y Cansado #{q}",
-      :type => 'video',
-      :safeSearch => 'none',
-      :maxResults => 10
-    }
+  client = get_service
+  search_response = client.list_searches(
+    'snippet',
+    q: "Faemino y Cansado #{q}",
+    type: 'video',
+    safe_search: 'none',
+    max_results: 10
   )
 
   # Pick a result at random
-  selected_position = rand(search_response.data.items.size)
-  selected_item = search_response.data.items[selected_position]
+  selected_position = rand(search_response.items.size)
+  selected_item = search_response.items[selected_position]
 
   # Return the video best matching the query string
   json({
     response_type: "in_channel",
-    text: "#{selected_item.snippet.title} https://www.youtube.com/watch?v=#{selected_item.id.videoId}"
+    text: "#{selected_item.snippet.title} https://www.youtube.com/watch?v=#{selected_item.id.video_id}"
   })
 end

@@ -4,5 +4,6 @@ ruby "~> 2.6.0"
 
 gem 'sinatra'
 gem 'sinatra-contrib'
+gem 'thin'
 
-gem 'google-api-client', '<0.9'
+gem 'google-api-client'
